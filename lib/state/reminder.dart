@@ -1,5 +1,9 @@
 import 'package:mobx/mobx.dart';
 
+part 'reminder.g.dart';
+
+class Reminder = _Reminder with _$Reminder;
+
 abstract class _Reminder with Store {
   final String id;
   final DateTime creationTime;
@@ -23,4 +27,8 @@ abstract class _Reminder with Store {
       creationTime == other.creationTime &&
       text == other.text &&
       isDone == other.isDone;
+
+  @override
+  int get hashCode => Object.hash(id, creationTime, text, isDone);
+
 }
