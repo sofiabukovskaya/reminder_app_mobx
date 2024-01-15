@@ -30,5 +30,4 @@ abstract class _Reminder with Store {
 
   @override
   int get hashCode => Object.hash(id, creationTime, text, isDone);
-
 }
