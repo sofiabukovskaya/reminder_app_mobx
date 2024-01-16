@@ -106,6 +106,69 @@ abstract class _AppState with Store {
     currentScreen = AppScreen.login;
     reminder.clear();
   }
+
+  @action
+  Future<bool> createReminder(String text) async {
+    isLoading = true;
+    final userId = currentUser?.uid;
+
+    if (userId == null) {
+      isLoading = false;
+      return false;
+    }
+    final creationDate = DateTime.now();
+
+    final firebaseReminder =
+        await FirebaseFirestore.instance.collection(userId).add(
+      {
+        _DocumentKey.text: text,
+        _DocumentKey.creationDate: creationDate,
+        _DocumentKey.isDone: false,
+      },
+    );
+
+    final reminderItem = Reminder(
+      id: firebaseReminder.id,
+      creationTime: creationDate,
+      text: text,
+      isDone: false,
+    );
+
+    reminder.add(
+      reminderItem,
+    );
+    isLoading = false;
+    return true;
+  }
+
+  @action
+  Future<bool> modify(
+    Reminder reminderItem, {
+    required bool isDone,
+  }) async {
+    final userId = currentUser?.uid;
+
+    if (userId == null) {
+      return false;
+    }
+
+    final collection =
+        await FirebaseFirestore.instance.collection(userId).get();
+
+    final firebaseReminder = collection.docs
+        .where((element) => element.id == reminderItem.id)
+        .first
+        .reference;
+    await firebaseReminder.update(
+      {
+        _DocumentKey.isDone: isDone,
+      },
+    );
+
+    reminder.firstWhere((element) => element.id == reminderItem.id).isDone =
+        isDone;
+    return true;
+  }
 }
 
 abstract class _DocumentKey {
