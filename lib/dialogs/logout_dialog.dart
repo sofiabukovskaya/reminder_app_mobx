@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:reminder_app_mobx/dialogs/generic_dialog.dart';
 
-Future<bool> showLogoutDialog(BuildContext context) =>
-    showGenericDialog<bool>(
+Future<bool> showLogoutDialog(BuildContext context) => showGenericDialog<bool>(
       context: context,
       title: 'Log out',
       content: 'Are you sure you wanna log out from account?',
@@ -11,5 +10,5 @@ Future<bool> showLogoutDialog(BuildContext context) =>
         'Log out': true,
       },
     ).then(
-          (value) => value ?? true,
+      (value) => value ?? true,
     );

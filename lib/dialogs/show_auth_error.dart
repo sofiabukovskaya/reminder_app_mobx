@@ -11,5 +11,5 @@ Future<bool> showAuthError(AuthError authError, BuildContext context) =>
         'Ok': true,
       },
     ).then(
-          (value) => value ?? true,
+      (value) => value ?? true,
     );

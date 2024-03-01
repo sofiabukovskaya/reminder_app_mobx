@@ -9,50 +9,56 @@ class LoginView extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final emailController =
-        useTextEditingController(text: 'sofitest@gmail.com'.ifDebugging);
-    final passwordController =
-        useTextEditingController(text: '123'.ifDebugging);
+    final emailController = useTextEditingController(
+      text: 'sofitest@gmail.com'.ifDebugging,
+    );
+    final passwordController = useTextEditingController(
+      text: '123'.ifDebugging,
+    );
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
       ),
-      body: Column(
-        children: [
-          TextField(
-            controller: emailController,
-            decoration: const InputDecoration(
-              hintText: 'Enter your email here...',
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: emailController,
+              decoration: const InputDecoration(
+                hintText: 'Enter your email here...',
+              ),
+              keyboardType: TextInputType.emailAddress,
+              keyboardAppearance: Brightness.dark,
             ),
-            keyboardType: TextInputType.emailAddress,
-            keyboardAppearance: Brightness.dark,
-          ),
-          TextField(
-            controller: passwordController,
-            decoration: const InputDecoration(
-              hintText: 'Enter your password here...',
+            TextField(
+              controller: passwordController,
+              decoration: const InputDecoration(
+                hintText: 'Enter your password here...',
+              ),
+              keyboardAppearance: Brightness.dark,
+              obscureText: true,
+              obscuringCharacter: '🔘',
             ),
-            keyboardAppearance: Brightness.dark,
-            obscureText: true,
-            obscuringCharacter: '🔘',
-          ),
-          TextButton(
-            onPressed: () {
-              final email = emailController.text;
-              final password = passwordController.text;
-              context.read<AppState>().login(email: email, password: password);
-            },
-            child: const Text('Log in'),
-          ),
-          TextButton(
-            onPressed: () {
-              context.read<AppState>().goTo(AppScreen.login);
-
-            },
-            child: const Text('Not register yet? Register here!'),
-          ),
-        ],
+            TextButton(
+              onPressed: () {
+                final email = emailController.text;
+                final password = passwordController.text;
+                context
+                    .read<AppState>()
+                    .login(email: email, password: password);
+              },
+              child: const Text('Log in'),
+            ),
+            TextButton(
+              onPressed: () {
+                context.read<AppState>().goTo(AppScreen.login);
+              },
+              child: const Text('Not register yet? Register here!'),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -11,5 +11,5 @@ Future<bool> showDeleteReminderDialog(BuildContext context) =>
         'Delete reminder': true,
       },
     ).then(
-          (value) => value ?? true,
+      (value) => value ?? true,
     );
